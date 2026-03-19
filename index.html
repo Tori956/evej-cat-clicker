@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EVEJ - Evolution Cat Clicker</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #f0f9ff;
+      padding-top: 30px;
+    }
+    h1 { color: #0284c7; font-size: 4em; margin: 10px; }
+    
+    .container {
+      background: white;
+      display: inline-block;
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      border: 5px solid #bae6fd;
+    }
+
+    #catImg {
+      width: 280px;
+      height: 280px;
+      cursor: pointer;
+      transition: transform 0.1s, filter 0.3s;
+      border-radius: 20px;
+      object-fit: cover;
+      margin: 20px 0;
+    }
+    
+    #catImg:active { transform: scale(0.95); }
+
+    .stats { font-size: 24px; color: #334155; }
+    .highlight { color: #f59e0b; font-weight: bold; }
+    .bonus-msg { color: #10b981; font-weight: bold; height: 30px; }
+    .level-tag { font-size: 18px; color: #8b5cf6; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>EVEJ</h1>
+  
+  <div class="container">
+    <div class="level-tag" id="levelTag">Stage 1: The Emoji</div>
+    
+    <img id="catImg" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f431/512.gif" alt="Cat">
+
+    <div class="stats">
+      <div>Points: ⭐ <span id="score">0</span></div>
+      <div>Treats: 🦴 <span id="treats" class="highlight">0</span></div>
+      <div class="bonus-msg" id="bonusMsg"></div>
+    </div>
+  </div>
+
+  <p>Every 100 points = Random Treats! | Every 100 clicks = 30 Treats + Evolution!</p>
+
+  <script>
+    let points = 0;
+    let clickCount = 0;
+    let treats = 0;
+    let lastPointMilestone = 0;
+
+    const scoreDisplay = document.getElementById('score');
+    const treatsDisplay = document.getElementById('treats');
+    const cat = document.getElementById('catImg');
+    const bonusMsg = document.getElementById('bonusMsg');
+    const levelTag = document.getElementById('levelTag');
+
+    // List of images for each stage
+    const catStages = [
+      "https://fonts.gstatic.com/s/e/notoemoji/latest/1f431/512.gif", // Emoji
+      "https://img.freepik.com/free-vector/cute-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4148.jpg", // Cartoon
+      "https://placecats.com/300/300", // Real Cat
+      "https://api.dicebear.com/7.x/bottts/svg?seed=Lucky" // Just a placeholder - you can swap for a cool Anime Cat URL!
+    ];
+
+    cat.onclick = function() {
+      clickCount++;
+      points++;
+
+      // --- LOGIC 1: Every 100 POINTS (Random Treats) ---
+      if (Math.floor(points / 100) > lastPointMilestone) {
+        lastPointMilestone = Math.floor(points / 100);
+        let randomTreats = Math.floor(Math.random() * 10) + 1; // 1 to 10 treats
+        treats += randomTreats;
+        showBonus("+" + randomTreats + " Random Treats!");
+      }
+
+      // --- LOGIC 2: Every 100 CLICKS (30 Treats + Upgrade) ---
+      if (clickCount % 100 === 0) {
+        treats += 30;
+        showBonus("+30 MEGA BONUS TREATS! 🦴");
+        
+        // Upgrade the cat image based on how many hundreds of clicks
+        let stage = Math.floor(clickCount / 100);
+        if (stage < catStages.length) {
+          cat.src = catStages[stage];
+          updateLevelLabel(stage);
+        }
+      }
+
+      // Update Screen
+      scoreDisplay.innerText = points;
+      treatsDisplay.innerText = treats;
+    };
+
+    function showBonus(text) {
+      bonusMsg.innerText = text;
+      setTimeout(() => { bonusMsg.innerText = ""; }, 2500);
+    }
+
+    function updateLevelLabel(stage) {
+      const names = ["Stage 1: Emoji", "Stage 2: Cartoon", "Stage 3: Realistic", "Stage 4: ULTIMATE ANIME"];
+      levelTag.innerText = names[stage] || "Max Level Reached!";
+    }
+  </script>
+
+</body>
+</html>
