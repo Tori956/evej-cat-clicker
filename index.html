@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>EVEJ - Evolution Cat Clicker</title>
+  <title>EVEJ - Cat Clicker</title>
   <style>
     body {
       text-align: center;
@@ -55,6 +55,7 @@
   </div>
 
   <p>Every 100 points = Random Treats! | Every 100 clicks = 30 Treats + Evolution!</p>
+  <p><a href="spacejump.html" style="color: #0284c7; text-decoration: none; font-weight: bold;">🚀 Launch Space Jump!</a></p>
 
   <script>
     let points = 0;
@@ -73,7 +74,7 @@
       "https://fonts.gstatic.com/s/e/notoemoji/latest/1f431/512.gif", // Emoji
       "https://img.freepik.com/free-vector/cute-cat-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-4148.jpg", // Cartoon
       "https://placecats.com/300/300", // Real Cat
-      "https://api.dicebear.com/7.x/bottts/svg?seed=Lucky" // Just a placeholder - you can swap for a cool Anime Cat URL!
+      "swordsman.png" // YOUR COOL SWORDSMAN PICTURE!
     ];
 
     cat.onclick = function() {
@@ -83,7 +84,7 @@
       // --- LOGIC 1: Every 100 POINTS (Random Treats) ---
       if (Math.floor(points / 100) > lastPointMilestone) {
         lastPointMilestone = Math.floor(points / 100);
-        let randomTreats = Math.floor(Math.random() * 10) + 1; // 1 to 10 treats
+        let randomTreats = Math.floor(Math.random() * 15) + 5; // 5 to 20 treats
         treats += randomTreats;
         showBonus("+" + randomTreats + " Random Treats!");
       }
@@ -93,7 +94,6 @@
         treats += 30;
         showBonus("+30 MEGA BONUS TREATS! 🦴");
         
-        // Upgrade the cat image based on how many hundreds of clicks
         let stage = Math.floor(clickCount / 100);
         if (stage < catStages.length) {
           cat.src = catStages[stage];
@@ -112,8 +112,8 @@
     }
 
     function updateLevelLabel(stage) {
-      const names = ["Stage 1: Emoji", "Stage 2: Cartoon", "Stage 3: Realistic", "Stage 4: ULTIMATE ANIME"];
-      levelTag.innerText = names[stage] || "Max Level Reached!";
+      const names = ["Stage 1: Emoji", "Stage 2: Cartoon", "Stage 3: Realistic", "Stage 4: THE SWORDSMAN CAT ⚔️"];
+      levelTag.innerText = names[stage] || "Max Evolution Reached!";
     }
   </script>
 
